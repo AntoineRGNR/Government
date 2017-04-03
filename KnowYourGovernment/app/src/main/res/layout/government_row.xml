@@ -8,7 +8,8 @@
     android:clickable="true"
     android:orientation="vertical"
     android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:paddingBottom="8dp"
+    android:background="#ffffff">
 
     <TextView
         android:id="@+id/politicianName"
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="level: 30"
+        android:text="lvl"
         android:textColor="#bf00ff"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"

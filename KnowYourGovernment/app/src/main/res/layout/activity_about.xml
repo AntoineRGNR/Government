@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Know Your Government"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="45dp" />
+
+    <TextView
+        android:id="@+id/appCreator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="©, 2017 Antoine REGNIER"
+        tools:layout_editor_absoluteX="112dp"
+        tools:layout_editor_absoluteY="188dp" />
+
+    <TextView
+        android:id="@+id/appVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Version 1.0"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="323dp" />
+</android.support.constraint.ConstraintLayout>

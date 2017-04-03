@@ -49,7 +49,7 @@ public class PoliticianAdapter extends RecyclerView.Adapter<PoliticianListHolder
         Politician politician = politicianList.get(position);
         holder.politicianFunction.setText(politician.getOffice());
         Log.d("Politician Adapter", "onBindViewHolder: " + politician.getOffice());
-        holder.politicianName.setText("level: " + politician.getName());
+        holder.politicianName.setText(politician.getName());
         Log.d("Politician Adapter", "onBindViewHolder: " + politician.getName());
     }
 
