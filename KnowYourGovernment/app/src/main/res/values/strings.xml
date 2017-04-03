@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KnowYourGovernment</string>
+
+    <string name="TAGMA">MainActivity</string>
 </resources>
