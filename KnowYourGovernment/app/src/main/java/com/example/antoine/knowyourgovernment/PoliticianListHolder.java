@@ -17,8 +17,8 @@ public class PoliticianListHolder extends RecyclerView.ViewHolder{
     public PoliticianListHolder(View view) {
         super(view);
         //Var TextView Initialization
-        politicianName = (TextView) view.findViewById(R.id.politicianName);
-        politicianFunction = (TextView) view.findViewById(R.id.politicianFunction);
+        politicianName = (TextView) view.findViewById(R.id.politicianNameDetail);
+        politicianFunction = (TextView) view.findViewById(R.id.politicianFunctionDetail);
     }
 
 }
