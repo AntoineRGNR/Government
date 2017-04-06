@@ -20,7 +20,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".InformationActivity"
+        android:name=".InformationActivity"
+        android:parentActivityName=".MainActivity"
+        android:launchMode="singleTask"/>
+        <activity
+            android:name=".OfficialActivity"
             android:parentActivityName=".MainActivity"
             android:launchMode="singleTask"/>
     </application>

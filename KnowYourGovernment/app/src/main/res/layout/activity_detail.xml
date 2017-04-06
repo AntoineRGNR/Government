@@ -25,7 +25,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/politicianFunctionDetail"
+        android:id="@+id/politicianFunction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textLocationOfficial" />
 
     <TextView
-        android:id="@+id/politicianNameDetail"
+        android:id="@+id/politicianName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -55,7 +55,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/politicianFunctionDetail"
+        app:layout_constraintTop_toBottomOf="@+id/politicianFunction"
         android:textColor="#ffffff"/>
 
     <ImageView
@@ -67,7 +67,7 @@
         android:layout_marginTop="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/politicianNameDetail"
+        app:layout_constraintTop_toBottomOf="@+id/politicianName"
         app:srcCompat="@drawable/missingimage" />
 
 </android.support.constraint.ConstraintLayout>

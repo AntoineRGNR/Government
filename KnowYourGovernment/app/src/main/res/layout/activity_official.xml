@@ -4,43 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#bf00ff">
+    android:background="#3232ff">
 
     <TextView
         android:id="@+id/textLocationOfficial"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
+        android:background="#bf00ff"
         android:text="Chicago, IL 60614"
         android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="18sp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:background="#ffffff"
+        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textLocationOfficial"
-        app:layout_constraintVertical_bias="1.0"
-        android:backgroundTint="#3232ff">
+        app:layout_constraintVertical_bias="0.0"
+        >
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/CSL"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="0dp"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+            tools:layout_editor_absoluteY="8dp"
+            >
 
             <ImageView
                 android:id="@+id/politicianPhoto"
@@ -54,7 +58,7 @@
                 android:layout_marginStart="150dp" />
 
             <TextView
-                android:id="@+id/politicianFunctionDetail"
+                android:id="@+id/politicianFunction"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -72,7 +76,7 @@
                 android:textColor="#ffffff"/>
 
             <TextView
-                android:id="@+id/politicianNameDetail"
+                android:id="@+id/politicianName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -84,7 +88,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/politicianFunctionDetail"
+                app:layout_constraintTop_toBottomOf="@+id/politicianFunction"
                 android:textColor="#ffffff"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp" />
@@ -101,7 +105,7 @@
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/politicianNameDetail"
+                app:layout_constraintTop_toBottomOf="@+id/politicianName"
                 android:textColor="#ffffff"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp" />
@@ -172,7 +176,7 @@
                 android:layout_marginStart="150dp" />
 
             <TextView
-                android:id="@+id/oliticianPhoneText"
+                android:id="@+id/politicianPhoneText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="150dp"
@@ -193,7 +197,7 @@
                 android:text="antoine.regnier@reseau.eseo.fr"
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/oliticianPhoneText"
+                app:layout_constraintTop_toBottomOf="@+id/politicianPhoneText"
                 android:textColor="#ffffff"
                 android:layout_marginStart="150dp" />
 

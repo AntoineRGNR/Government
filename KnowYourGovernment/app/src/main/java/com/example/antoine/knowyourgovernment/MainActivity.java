@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Var ArrayList Declaration and Initialization
     private ArrayList<Politician> politicianList = new ArrayList<>();
@@ -40,33 +40,41 @@ public class MainActivity extends AppCompatActivity {
     //Var RecyclerVIew Declaration
     private RecyclerView recyclerView;
 
-    //Var SwipeRefreshLayout Declaration
-    private SwipeRefreshLayout swiper;
-
     //Var StockAdapter Declaration
     private PoliticianAdapter politicianAdapter;
 
+    //Var Locator Declaration
     private Locator locator;
+
+    //Var int Declaration
+    private static final int ADD_REQ = 1;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        //RecyclerView Initialization
+        recyclerView = (RecyclerView)findViewById(R.id.recycler);
 
+        //PoliticianAdapter Initialization
         politicianAdapter = new PoliticianAdapter(politicianList, this);
 
+        //Set RecyclerView to PoliticianAdapter
         recyclerView.setAdapter(politicianAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //Locator Initilization
         locator = new Locator(this);
+        //Ask For Locatopn
         locator.determineLocationGPS();
 
         // Make some data - not always needed - used to fill list
-        for (int i = 0; i < 3; i++) {
-            politicianList.add(new Politician("GOD", "Antoine", "", "", "", "", "", "", "", "", ""));
-        }
+        politicianList.add(new Politician("GOD", "Antoine", "Democratic", "20 allee du jardin anglais\n93340\nLe Raincy", "06", "antoine", "pute.com", "OK", "OK", "", ""));
+        politicianList.add(new Politician("JAVIER", "Antoine", "LOL", "20 allee du jardin anglais\n93340\nLe Raincy", "06", "antoine", "pute.com", "", "OK", "OK", ""));
+        politicianList.add(new Politician("PASTORE", "Antoine", "IZI", "20 allee du jardin anglais\n93340\nLe Raincy", "06", "antoine", "pute.com", "", "OK", "", "OK"));
         Log.d(this.getString(R.string.TAGMA), "onCreate: End");
     }
 
@@ -98,6 +106,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onClick(View v) {
+        //Intent Declaration and Initialization
+        Intent intentOfficialActivity = new Intent(MainActivity.this, OfficialActivity.class);
+        int pos = recyclerView.getChildLayoutPosition(v);
+        //Get Position of selected Official to put in Intent
+        intentOfficialActivity.putExtra("POLITICIAN", politicianList.get(pos));
+        //Start Intent with selected Official
+        startActivityForResult(intentOfficialActivity, ADD_REQ);
+    }
+
+    @Override
     protected void onDestroy() {
         Log.d(this.getString(R.string.TAGMA), "onDestroy: ");
         locator.shutDown();
@@ -107,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     public void setData(double lat, double lon) {
         String address = doAddress(lat, lon);
 
-        ((TextView) findViewById(R.id.textLocation)).setText(address);
+        ((TextView)findViewById(R.id.textLocation)).setText(address);
     }
 
     @Override
@@ -187,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 // Set Data
                 ((TextView) findViewById(R.id.textLocation)).setText(et.getText().toString());
+                startAsyncTask(et.getText().toString());
             }
         });
         builder.setNegativeButton(R.string.c, new DialogInterface.OnClickListener()
@@ -201,6 +221,11 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void startAsyncTask(String string)
+    {
+        new AsyncTaskLoadOfficial(this).execute(string);
     }
 
 }

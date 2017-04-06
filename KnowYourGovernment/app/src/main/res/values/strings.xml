@@ -2,6 +2,8 @@
     <string name="app_name">KnowYourGovernment</string>
 
     <string name="TAGMA">MainActivity</string>
+    <string name="TAGOA">OfficialActivity</string>
+    <string name="TAGIA">InformationActivity</string>
 
     <string name="c">CANCEL</string>
     <string name="ok">OK</string>

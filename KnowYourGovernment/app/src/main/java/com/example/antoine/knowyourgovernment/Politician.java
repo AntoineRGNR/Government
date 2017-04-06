@@ -3,11 +3,13 @@ package com.example.antoine.knowyourgovernment;
 import android.gesture.GestureOverlayView;
 import android.provider.ContactsContract;
 
+import java.io.Serializable;
+
 /**
  * Created by antoine on 4/3/17.
  */
 
-public class Politician {
+public class Politician implements Serializable {
 
     //Politician Var Declaration
     private String Office;

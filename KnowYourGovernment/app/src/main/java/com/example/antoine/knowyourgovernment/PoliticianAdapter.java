@@ -37,7 +37,7 @@ public class PoliticianAdapter extends RecyclerView.Adapter<PoliticianListHolder
         Log.d(TAG, "onCreateViewHolder: MAKING NEW");
         //Initializing the view holder to hold stock_list_row
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.government_row, parent, false);
-        //itemView.setOnClickListener(mainAct);
+        itemView.setOnClickListener(mainAct);
         //itemView.setOnLongClickListener(mainAct);
         return new PoliticianListHolder(itemView);
     }
