@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Chicago, IL 60614"
@@ -23,9 +23,8 @@
         android:textSize="18sp"/>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="32dp"
         android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,13 +44,14 @@
 
             <ImageView
                 android:id="@+id/politicianPhoto"
-                android:layout_width="149dp"
-                android:layout_height="133dp"
-                app:srcCompat="?android:attr/textSelectHandle"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:srcCompat="@drawable/missingimage"
                 android:layout_marginLeft="150dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/politicianParty" />
+                app:layout_constraintTop_toBottomOf="@+id/politicianParty"
+                android:layout_marginStart="150dp" />
 
             <TextView
                 android:id="@+id/politicianFunctionDetail"
@@ -85,7 +85,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/politicianFunctionDetail"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/politicianParty"
@@ -100,7 +102,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/politicianNameDetail"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/politicianAddress"
@@ -112,7 +116,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/politicianPhoto"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="32dp" />
 
             <TextView
                 android:id="@+id/politicianPhone"
@@ -124,7 +129,8 @@
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/politicianAddress"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="32dp" />
 
             <TextView
                 android:id="@+id/politicianEmail"
@@ -136,7 +142,8 @@
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/politicianPhone"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="32dp" />
 
             <TextView
                 android:id="@+id/politicianWebsite"
@@ -148,7 +155,8 @@
                 android:textSize="18sp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/politicianEmail"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="32dp" />
 
             <TextView
                 android:id="@+id/politicianAddressText"
@@ -160,7 +168,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/politicianPhoto"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="150dp" />
 
             <TextView
                 android:id="@+id/oliticianPhoneText"
@@ -172,7 +181,8 @@
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/politicianAddress"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="150dp" />
 
             <TextView
                 android:id="@+id/politicianEmailText"
@@ -184,7 +194,8 @@
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/oliticianPhoneText"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="150dp" />
 
             <TextView
                 android:id="@+id/politicianWebsiteText"
@@ -196,39 +207,51 @@
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/politicianEmailText"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:layout_marginStart="150dp" />
 
             <ImageView
                 android:id="@+id/youtubeIcon"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                app:srcCompat="@drawable/ic_info"
-                tools:layout_editor_absoluteX="63dp"
-                tools:layout_editor_absoluteY="449dp" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/youtube"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/politicianWebsite"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:layout_editor_absoluteY="438dp"
+                tools:layout_editor_absoluteX="105dp" />
 
             <ImageView
                 android:id="@+id/twitterIcon"
-                android:layout_width="33dp"
-                android:layout_height="32dp"
-                app:srcCompat="@drawable/ic_search"
-                tools:layout_editor_absoluteX="160dp"
-                tools:layout_editor_absoluteY="449dp" />
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                app:srcCompat="@drawable/twitter"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/politicianWebsiteText"
+                app:layout_constraintLeft_toRightOf="@+id/youtubeIcon"
+                android:layout_marginLeft="50dp" />
 
             <ImageView
                 android:id="@+id/googleIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/btn_dialog"
-                tools:layout_editor_absoluteX="268dp"
-                tools:layout_editor_absoluteY="449dp" />
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/googleplus"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/politicianWebsiteText"
+                app:layout_constraintRight_toLeftOf="@+id/facebookIcon"
+                android:layout_marginRight="47dp" />
 
             <ImageView
                 android:id="@+id/facebookIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_delete"
-                tools:layout_editor_absoluteX="369dp"
-                tools:layout_editor_absoluteY="449dp" />
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:srcCompat="@drawable/facebook"
+                android:layout_marginTop="14dp"
+                app:layout_constraintTop_toBottomOf="@+id/politicianWebsite"
+                android:layout_marginRight="32dp"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="433dp" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
