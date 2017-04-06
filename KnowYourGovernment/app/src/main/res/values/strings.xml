@@ -7,4 +7,8 @@
     <string name="ok">OK</string>
 
     <string name="sD">Enter a City, State or a ZIP Code:</string>
+
+    <string name="appName">Know Your Government</string>
+    <string name="appCreator">©, 2017 Antoine REGNIER</string>
+    <string name="appVersion">Version 1.0</string>
 </resources>
