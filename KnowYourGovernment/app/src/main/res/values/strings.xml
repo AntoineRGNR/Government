@@ -2,4 +2,9 @@
     <string name="app_name">KnowYourGovernment</string>
 
     <string name="TAGMA">MainActivity</string>
+
+    <string name="c">CANCEL</string>
+    <string name="ok">OK</string>
+
+    <string name="sD">Enter a City, State or a ZIP Code:</string>
 </resources>
