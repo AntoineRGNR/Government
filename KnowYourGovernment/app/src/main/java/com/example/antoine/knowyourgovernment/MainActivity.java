@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             for (Address ad : addresses) {
                 Log.d(this.getString(R.string.TAGMA), "doLocation: " + ad);
 
-                sb.append("\t" + ad.getAddressLine(1) + "\n");
+                sb.append(ad.getAddressLine(1));
             }
             return sb.toString();
         } catch (IOException e) {
