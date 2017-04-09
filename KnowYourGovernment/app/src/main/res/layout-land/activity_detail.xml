@@ -25,50 +25,38 @@
         android:id="@+id/politicianFunctionDetail"
         android:layout_width="0dp"
         android:layout_height="22dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
         android:gravity="center"
         android:text="United State President"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/politicianFunctionDetail" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textLocationOfficialDetail"
+        android:layout_marginLeft="64dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/politicianNameDetail"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="64dp"
         android:gravity="center"
         android:text="Javier PASTORE"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="64dp"
         app:layout_constraintTop_toBottomOf="@+id/politicianFunctionDetail" />
 
     <ImageView
         android:id="@+id/photoDetail"
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="250dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/missingimage"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="64dp"
-        app:layout_constraintTop_toBottomOf="@+id/politicianNameDetail" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textLocationOfficialDetail" />
 
 </android.support.constraint.ConstraintLayout>

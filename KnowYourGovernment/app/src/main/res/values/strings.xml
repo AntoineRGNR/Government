@@ -4,6 +4,7 @@
     <string name="TAGMA">MainActivity</string>
     <string name="TAGOA">OfficialActivity</string>
     <string name="TAGIA">InformationActivity</string>
+    <string name="TAGDA">DetailActivity</string>
 
     <string name="c">CANCEL</string>
     <string name="ok">OK</string>

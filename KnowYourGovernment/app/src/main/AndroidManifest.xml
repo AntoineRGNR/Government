@@ -27,6 +27,10 @@
             android:name=".OfficialActivity"
             android:parentActivityName=".MainActivity"
             android:launchMode="singleTask"/>
+        <activity
+            android:name=".DetailActivity"
+            android:parentActivityName=".OfficialActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>
