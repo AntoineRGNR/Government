@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -29,7 +30,7 @@ public class AsyncTaskLoadOfficial extends AsyncTask<String, Integer, String>
 
     private final String dataURL = "https://www.googleapis.com/civicinfo/v2/representatives?key=";
 
-    private String API_KEY = "AIzaSyBrVeqK9HJFogKiinQciLobFRNrJGLjYjU";
+    private String API_KEY = "AIzaSyBlH0tbyYzBTNlZUPf16dt3B_300GByYlQ";
 
     private MainActivity mainActivity;
 
@@ -90,7 +91,7 @@ public class AsyncTaskLoadOfficial extends AsyncTask<String, Integer, String>
     protected void onPostExecute(String string)
     {
         Log.d(TAGAS, "onPostExecute: " + string);
-        multipleStockDialog(parseJSON(string));
+        parseJSON(string);
     }
 
     private ArrayList<Politician> parseJSON(String s)
@@ -100,15 +101,26 @@ public class AsyncTaskLoadOfficial extends AsyncTask<String, Integer, String>
         try
         {
             JSONArray jObjMain = new JSONArray(s);
+
+            // Getting JSON Array node
+            //JSONArray normalizedInput = jObjMain.getJSONArray(1);
+
             count = jObjMain.length();
             if(count != 0){
                 for (int i = 0; i < jObjMain.length(); i++)
                 {
-                    JSONObject jStock = (JSONObject) jObjMain.get(i);
-                    String name = jStock.getString("company_name");
-                    Log.d(TAGAS, "parseJSON: " + name);
-                    String symbol = jStock.getString("company_symbol");
-                    Log.d(TAGAS, "parseJSON: " + symbol);
+                    JSONObject nI = jObjMain.getJSONObject(1);
+                    //JSONObject jStock = (JSONObject) jObjMain.get(i);
+                    //String name = jStock.getString("company_name");
+                    String city = nI.getString("city");
+                    Log.d(TAGAS, "parseJSON: " + city);
+                    String state = nI.getString("state");
+                    Log.d(TAGAS, "parseJSON: " + state);
+                    String zip = nI.getString("zip");
+                    Log.d(TAGAS, "parseJSON: " + zip);
+
+                    //String symbol = jStock.getString("company_symbol");
+
 
                     //stockFound.add(new Stock(symbol, name, 0, 0, 0));
                 }
