@@ -3,7 +3,7 @@
 
     <string name="TAGMA">MainActivity</string>
     <string name="TAGOA">OfficialActivity</string>
-    <string name="TAGIA">InformationActivity</string>
+    <string name="TAGAA">AboutActivity</string>
     <string name="TAGDA">DetailActivity</string>
 
     <string name="c">CANCEL</string>
@@ -14,4 +14,19 @@
     <string name="appName">Know Your Government</string>
     <string name="appCreator">©, 2017 Antoine REGNIER</string>
     <string name="appVersion">Version 1.0</string>
+
+    <string name="noNetwork">No Network Connection</string>
+    <string name="dataAccess">Data cannot be accessed/loaded without an internet connection.</string>
+
+    <string name="address">Address:</string>
+    <string name="contentEmail">Content Email</string>
+    <string name="contentWebsite">Content Website</string>
+    <string name="email">Email:</string>
+    <string name="phone">Phone:</string>
+    <string name="website">Website:</string>
+    <string name="officialImage">official image</string>
+    <string name="facebook">facebook</string>
+    <string name="google">google</string>
+    <string name="twitter">twitter</string>
+    <string name="youtube">youtube</string>
 </resources>

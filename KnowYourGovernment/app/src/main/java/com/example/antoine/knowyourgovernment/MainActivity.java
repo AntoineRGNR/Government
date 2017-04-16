@@ -1,5 +1,9 @@
 package com.example.antoine.knowyourgovernment;
 
+/**
+ * Created by antoine on 4/16/17.
+ */
+
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,20 +11,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -32,105 +33,103 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
+    //Var String Declaration
+    private static final String DEFAULT_LOCATION = "No Data For Location";
+    private static final String TAG = "MainActivity";
+    private String address = null;
+    private String lastLocation;
 
-    //Var ArrayList Declaration and Initialization
-    private ArrayList<Politician> politicianList = new ArrayList<>();
+    //Var List Declaration
+    private List<Office> officesList = new ArrayList<>();
 
-    //Var RecyclerVIew Declaration
+    //Var RecyclerView Declaration
     private RecyclerView recyclerView;
 
-    //Var StockAdapter Declaration
-    private PoliticianAdapter politicianAdapter;
+    //Var OfficeAdapter Declaration
+    private OfficeAdapter mAdapter;
 
     //Var Locator Declaration
     private Locator locator;
 
-    //Var int Declaration
-    private static final int ADD_REQ = 1;
+    //Var MainActivity Declaration
+    private MainActivity mainActivity;
 
+    //Var TextView Declaration
+    private TextView textViewLocation;
 
+    //Var ConstraintLayout Declaration
+    private ConstraintLayout noNetworkLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
+        Log.d(this.getString(R.string.TAGMA), ": onCreateStart");
+
         super.onCreate(savedInstanceState);
+        mainActivity = this;
         setContentView(R.layout.activity_main);
-
-        //RecyclerView Initialization
-        recyclerView = (RecyclerView)findViewById(R.id.recycler);
-
-        //PoliticianAdapter Initialization
-        politicianAdapter = new PoliticianAdapter(politicianList, this);
-
-        //Set RecyclerView to PoliticianAdapter
-        recyclerView.setAdapter(politicianAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //Locator Initilization
+        textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        textViewLocation.setText(DEFAULT_LOCATION);
         locator = new Locator(this);
-        //Ask For Locatopn
-        locator.determineLocationGPS();
+        mAdapter = new OfficeAdapter(officesList, this);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        noNetworkLayout = (ConstraintLayout) findViewById(R.id.constraintNoNetwork);
+        if (isNetworkOn()) {
+            noNetworkLayout.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+            locator.determineLocation();
+        } else {
+            noNetworkLayout.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
+        if (address != null) {
+            new OfficialsParserAsyncTask(mainActivity, address).execute();
+        }
 
-        // Make some data - not always needed - used to fill list
-        politicianList.add(new Politician("GOD", "Antoine", "Democratic", "20 allee du jardin anglais\n93340\nLe Raincy", "06", "antoine", "pute.com", "OK", "OK", "", ""));
-        politicianList.add(new Politician("JAVIER", "Antoine", "LOL", "20 allee du jardin anglais\n93340\nLe Raincy", "06", "antoine", "pute.com", "", "OK", "OK", ""));
-        politicianList.add(new Politician("PASTORE", "Antoine", "IZI", "20 allee du jardin anglais\n93340\nLe Raincy", "06", "antoine", "pute.com", "", "OK", "", "OK"));
-        Log.d(this.getString(R.string.TAGMA), "onCreate: End");
+        Log.d(this.getString(R.string.TAGMA), ": onCreateEnd");
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        //Adding Menu to MainActivity
-        Log.d(this.getString(R.string.TAGMA), "onCreateOptionsMenu");
+    public boolean onCreateOptionsMenu(Menu menu){
+        Log.d(this.getString(R.string.TAGMA), ": onCreateOptionsMenu");
+
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        Log.d(this.getString(R.string.TAGMA), "onOptionsItemSelected");
-        //Doing Action if Menu Icon is selected
+    public boolean onOptionsItemSelected(MenuItem item){
+        Log.d(this.getString(R.string.TAGMA), ": onOptionsItemSelected");
         switch (item.getItemId()) {
-            case R.id.menuSearch:
-                searchDialog();
-                return true;
             case R.id.menuInfo:
-                Intent intent = new Intent(getApplicationContext(), InformationActivity.class);
-                startActivity(intent);
+                Log.d(this.getString(R.string.TAGMA), ": onOptionsItemSelected: menuInfo");
+                Intent intentAboutActivity = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intentAboutActivity);
+                return true;
+            case R.id.menuSearch:
+                Log.d(this.getString(R.string.TAGMA), ": onOptionsItemSelected, menuSearch");
+                askNewLocationDialog();
                 return true;
             default:
+                Log.d(this.getString(R.string.TAGMA), ": onOptionsItemSelected, default");
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        //Intent Declaration and Initialization
-        Intent intentOfficialActivity = new Intent(MainActivity.this, OfficialActivity.class);
-        int pos = recyclerView.getChildLayoutPosition(v);
-        //Get Position of selected Official to put in Intent
-        intentOfficialActivity.putExtra("POLITICIAN", politicianList.get(pos));
-        //Start Intent with selected Official
-        startActivityForResult(intentOfficialActivity, ADD_REQ);
-    }
 
-    @Override
-    protected void onDestroy() {
-        Log.d(this.getString(R.string.TAGMA), "onDestroy: ");
-        locator.shutDown();
-        super.onDestroy();
-    }
-
-    public void setData(double lat, double lon) {
+    public void setData(double lat, double lon){
+        Log.d(this.getString(R.string.TAGMA), "setData: Lat: " + lat + ", Lon: " + lon);
         String address = doAddress(lat, lon);
-
-        ((TextView)findViewById(R.id.textLocation)).setText(address);
+        ((TextView) findViewById(R.id.textViewLocation)).setText(address);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.d(this.getString(R.string.TAGMA), ": onRequestPermissionsResult");
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         Log.d(this.getString(R.string.TAGMA), "onRequestPermissionsResult: CALL: " + permissions.length);
         Log.d(this.getString(R.string.TAGMA), "onRequestPermissionsResult: PERM RESULT RECEIVED");
@@ -142,90 +141,138 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         Log.d(this.getString(R.string.TAGMA), "onRequestPermissionsResult: HAS PERM");
                         locator.setUpLocationManager();
+                        locator.determineLocation();
                     } else {
-                        Log.d(this.getString(R.string.TAGMA), "onRequestPermissionsResult: NO PERM");
+                        Toast.makeText(this, "Location permission was denied - cannot determine address", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "onRequestPermissionsResult: NO PERM");
                     }
                 }
             }
         }
-        Log.d(this.getString(R.string.TAGMA), "onRequestPermissionsResult: Calling super onRequestPermissionsResult");
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.d(this.getString(R.string.TAGMA), "onRequestPermissionsResult: Exiting onRequestPermissionsResult");
     }
 
+
     private String doAddress(double latitude, double longitude) {
 
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        Log.d(this.getString(R.string.TAGMA), "doAddress: Lat: " + latitude + ", Lon: " + longitude);
 
-        try {
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            StringBuilder sb = new StringBuilder();
+        List<Address> addresses = null;
+        for (int times = 0; times < 3; times++) {
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                Log.d(this.getString(R.string.TAGMA), "doAddress: Getting address now");
 
-            for (Address ad : addresses) {
-                Log.d(this.getString(R.string.TAGMA), "doLocation: " + ad);
 
-                sb.append(ad.getAddressLine(1));
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                StringBuilder sb = new StringBuilder();
+
+                for (Address ad : addresses) {
+                    Log.d(this.getString(R.string.TAGMA), "doLocation: " + ad);
+
+                    sb.append(ad.getAddressLine(1));
+                }
+                if (locator != null) {
+                    locator.shutdown();
+                }
+                this.address = sb.toString();
+                return sb.toString();
+            } catch (IOException e) {
+                Log.d(TAG, "doAddress: " + e.getMessage());
+
             }
-            return sb.toString();
-        } catch (IOException e) {
-            Toast.makeText(this, "Cannot acquire ZIP code from Lat/Lon.\n\nNetwork resources unavailable", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "GeoCoder service is slow - please wait", Toast.LENGTH_SHORT).show();
         }
+        if (locator != null) {
+            locator.shutdown();
+        }
+        Toast.makeText(this, "GeoCoder service timed out - please try again", Toast.LENGTH_LONG).show();
         return null;
     }
 
-    public boolean networkCheck()
-    {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    public void noLocationAvailable(){
+        Log.d(this.getString(R.string.TAGMA), ": noLocationAvailable");
+        Toast.makeText(this, "No location providers were available", Toast.LENGTH_LONG).show();
     }
 
-    public void searchDialog()
-    {
-        Log.d(this.getString(R.string.TAGMA), "searchDialog");
-        //AlertDialog Declaration and Initialization
+    @Override
+    protected void onDestroy(){
+        Log.d(this.getString(R.string.TAGMA), ": onDestroy");
+        if (locator != null) {
+            locator.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    public void setOfficesList(List<Office> officesList){
+        Log.d(this.getString(R.string.TAGMA), ": setOfficesList");
+        this.officesList.clear();
+        for (Office office : officesList) {
+            this.officesList.add(office);
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void setLastLocation(String lastLocation){
+        Log.d(this.getString(R.string.TAGMA), ": setLastLocation");
+        this.lastLocation = lastLocation;
+        ((TextView) findViewById(R.id.textViewLocation)).setText(this.lastLocation);
+    }
+
+    @Override
+    public void onClick(View v){
+        Log.d(this.getString(R.string.TAGMA), ": onClick");
+        int pos = recyclerView.getChildLayoutPosition(v);
+        Intent intent = new Intent(MainActivity.this, OfficialActivity.class);
+        intent.putExtra("office", this.officesList.get(pos));
+        intent.putExtra("address", this.address);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onLongClick(View v){
+        Log.d(this.getString(R.string.TAGMA), ": onLongClick");
+        onClick(v);
+        return true;
+    }
+
+    private void askNewLocationDialog(){
+        Log.d(this.getString(R.string.TAGMA), ": askNewLocationDialog");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //EditText Declaration and Initialization
-        final EditText et = new EditText(this);
-        et.setInputType(InputType.TYPE_CLASS_TEXT);
-        et.setGravity(Gravity.CENTER_HORIZONTAL);
-        et.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
-
-        builder.setView(et);
-
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int id)
-            {
-                // Set Data
-                ((TextView) findViewById(R.id.textLocation)).setText(et.getText().toString());
-                startAsyncTask(et.getText().toString());
+        builder.setTitle("Enter a City, State or a Zip Code:");
+        LayoutInflater inflater = LayoutInflater.from(this);
+        final View view = inflater.inflate(R.layout.dialog, null);
+        builder.setView(view);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                EditText editTestSymbol = (EditText) view.findViewById(R.id.textTypedAsk);
+                new OfficialsParserAsyncTask(mainActivity, editTestSymbol.getText().toString()).execute();
             }
         });
-        builder.setNegativeButton(R.string.c, new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int id)
-            {
-
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
             }
         });
-
-        builder.setMessage(R.string.sD);
-
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
-    public void startAsyncTask(String string)
-    {
-        new AsyncTaskLoadOfficial(this).execute(string);
+
+    private boolean isNetworkOn(){
+        Log.d(this.getString(R.string.TAGMA), ": isNetworkOn");
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
+    public String getAddress(){
+        Log.d(this.getString(R.string.TAGMA), ": getAddress");
+        return address;
+    }
+
+    public void setAddress(String address){
+        Log.d(this.getString(R.string.TAGMA), ": setAddress");
+        this.address = address;
+    }
 }
